@@ -19,32 +19,6 @@ jobs:
       - name: Deploy
         run: |
           # SSH接続して、git pullする 
-          echo "-----BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEAt5eQCsPmDmWnNWzo89eiOYwYcIpzFjwV8YbUAOYLqRW0+cJN
-oDIZuTD7GESOqBBVUg61V7ZtkVlVXQsf6g1hdObm8cYgsf0CSIGE2BmpOEzG5b/4
-CW2J3F1YGsKt5xEOFZoj/DpJeMI6geehuTE2ZlKqznbVIgPTK+VNczvpAu5sIu1C
-uuxKFp/i9f/uJzWoCuhtEUfPArng8bcp8w0xhIqcujqBKHqMC76ruYytqVsnLAgO
-pMjqGa+qvhvyUGk1r63LUFFbyy674L5fT2GpxP9nC6HSuSfscwCB1xZt+A3SE4KD
-VeBMRjSAFXkl92ECKrCNIeoRqjnF3rIufqY5JQIDAQABAoIBAQCMW9tL36kqqJzF
-Q5Z1lg34YRruL2r9PMKp/KJobXfMtUO/DsW6C5OO+dt+GivWYWZZbdVGUbpCvUF9
-+NtVXRV9AmrdvNOSQBRWym59qGCvIkONss42pwAW8WZCT0QUu/1Alq+cThONtzBz
-0Frb8rvcTqc3YbJgZvwzOwOTbeIe0kkSDoLmmprBoMu2OwFJoFNZz1pJdI4mZbCE
-7lJTFMrISnH9YkkrfI2x6nf90M1gjvhUUJZIcNv7KpfX1xnVjYM9kA5/Fv9noUnD
-A62gXVcpyTMlARWYN39kTCUlhpJXMf2huqI6PWkBgYKQEtgpnQvl9fnsNSrNQYWQ
-H8eW+9ihAoGBAP7lfajUMUCkIsyDASLxTJwWp2jceZtbL2rLPO2M6h6WuiL5Wz7C
-U9U+GpYqhakBQx6nPVKwwEEq3lBOA7PptmCUSR7nf14mSUoIbzv5MDB97Clyu5v+
-WbXXXreeTp4ssedDf2RhM+C3q0zw6D/EGSv4TMBR3Yt9Ty2fsf5KFktLAoGBALhj
-CwX9TmzVY08l1HMkaFjJxWO6Gs2yecpB846Cd8ce61wUPDdqQBdmEBtnAbqgBPCr
-/IGzfyJFJyzkBYOzi/9GNqCkTmGMsdp2giWQbMkm3SNIb4pab+qvB4+uJ4qlM1g3
-QtMmDWZfBr82mumR9hl2MR2cgp3zyr0bXw+C+9dPAoGBAKX4Zi71I7DUbzg9IRNQ
-jTKhaZZU4PXwlNpzxZNkCtmqCT9WoDwoKpASJRucSnW2Na8S9FIQds64DBO8CJsw
-ValjRI1T7VIvmc8T2OHzKpaYl5qRc2lqX52Qw8LJ2KUTsy9DewKwbCgpT+gEgSVs
-GXvQ7KDZbWkzScgKUMqkEQorAoGAWRpTm2NbYLCFuxu23KV9X1qx7o1iooBa5miU
-gAuAQlMovWhx6P2JV0VVB0jxxvPJL1yNO0g4aaEtWz4dhBVh08xkXaDI188bq0yV
-e/2c9F+5gXFhpWQqrShD6STpqtBGTZz2x/6dfxjws7p5heGpIYjCF2Moo5fKIzR0
-7ZQIi3UCgYATCBIOkEy5WZte6Rygudi/NI9a6UYoroHRZkOSY3Kn9KVIBKwFs4ih
-YnW0va30EL7//3FqJtgrtMbSvF0V91lPrk0G3z8BCCWmOE+XiWJclL65M0iEaC/o
-HyHIjEclc76cglbOWrav6zGias6yaICHLx54xVEASe5BKg37AtHP8g==
------END RSA PRIVATE KEY-----" > private_key
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key
           chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ec2-user@ec2-18-181-74-220.ap-northeast-1.compute.amazonaws.com "cd /home/ec2-user/tanzu-demo && git pull"
+          ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_USER_NAME }}@${{ secrets.EC2_HOST_NAME }} "cd /home/ec2-user/tanzu-demo && git pull"
